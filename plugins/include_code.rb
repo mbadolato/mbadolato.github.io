@@ -59,7 +59,7 @@ module Jekyll
         @filetype = file.extname.sub('.','') if @filetype.nil?
         title = @title ? "#{@title} (#{file.basename})" : file.basename
         url = "/#{code_dir}/#{@file}"
-        source = "<figure class='code'><figcaption><span>#{title}</span> <a href='#{url}'>download</a></figcaption>\n"
+        source = "<figure class='code panel panel-default'><figcaption class='panel-heading'><h3 class='panel-title'>#{title}</h3> <a href='#{url}'>download</a></figcaption>\n"
         source += "#{HighlightCode::highlight(code, @filetype)}</figure>"
         TemplateWrapper::safe_wrap(source)
       end
