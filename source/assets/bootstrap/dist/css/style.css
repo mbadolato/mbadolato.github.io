@@ -1,0 +1,17 @@
+.navbar-brand {
+    padding: 12px 15px;
+    height: 45px;
+}
+
+.navbar-nav > li > a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.search .form-control {
+    height: 30px;
+}
+
+.navbar {
+    min-height: 45px;
+}
