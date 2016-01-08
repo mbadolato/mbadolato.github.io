@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Mostly Harmless]]></title>
+  <link href="http://www.markbadolato.com/atom.xml" rel="self"/>
+  <link href="http://www.markbadolato.com/"/>
+  <updated>2016-01-03T13:47:54-07:00</updated>
+  <id>http://www.markbadolato.com/</id>
+  <author>
+    <name><![CDATA[Mark Badolato]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Colorize Your Cat Output]]></title>
+    <link href="http://www.markbadolato.com/blog/2013/12/22/colorized-cat-output/"/>
+    <updated>2013-12-22T13:37:00-07:00</updated>
+    <id>http://www.markbadolato.com/blog/2013/12/22/colorized-cat-output</id>
+    <content type="html"><![CDATA[<p>If you&#8217;re like me and constantly displaying source files via cat, here&#8217;s a tip for making that output colorized.</p>
+
+<p>First, make sure you have <code>easy_install</code> installed:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl -O http://python-distribute.org/distribute_setup.py
+</span><span class='line'>sudo python distribute_setup.py
+</span><span class='line'>sudo rm distribute_setup.py
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, install Pygments:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo easy_install Pygments
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, create an alias <code>ccat</code> (colorized cat) or something similar in your <code>.profile</code> or <code>.bash.rc</code> or <code>.bash_profile</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">alias </span><span class="nv">ccat</span><span class="o">=</span><span class="s1">&#39;pygmentize -O console256 -g&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Open a new terminal window or source the file containing your alias, and now you have colorized cat output!</p>
+
+<p><img src="http://www.markbadolato.com/images/misc/colorized_cat.png" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using FizzBuzz to Compare Speed in Perl vs. PHP]]></title>
+    <link href="http://www.markbadolato.com/blog/2013/08/24/using-fizzbuzz-to-compare-speed-in-perl-vs-php/"/>
+    <updated>2013-08-24T01:03:00-07:00</updated>
+    <id>http://www.markbadolato.com/blog/2013/08/24/using-fizzbuzz-to-compare-speed-in-perl-vs-php</id>
+    <content type="html"><![CDATA[<p>I know a lot of people dislike Perl, but I programmed a lot of large applications in it for many years. I agree that it can be difficult for programmers new to Perl to pick up on some of its nuances, but I disagree that it&#8217;s a complete mess/line noise/write-only. Good clean code can be written in any language, just like horrible disgusting code can be written in any language.</p>
+
+<p>A while back I saw a <a href="http://raid6.com.au/~onlyjob/posts/arena/">language speed shootout</a>, whereby the same version of a script was written in many different languages and compared against each other to see how quickly they ran. Surprisingly, Perl has been so well optimized, that its performance was right on par with the C and C++ versions of the test. PHP, Ruby, Python, Java, etc. were all comparatively much slower. You could see the iterations of each getting much longer as the memory use increased. Yet Perl (and the C&#8217;s) stayed pretty consistent throughout.</p>
+
+<p>Not being satisfied with someone else&#8217;s benchmarks, I ran the programs on a local machine. While the times were different, the results were nearly identical in terms of performance trends.</p>
+
+<!--more-->
+
+
+<p>Last year when I was hiring a developer for my team, I used the <a href="http://en.wikipedia.org/wiki/Fizz_buzz">FizzBuzz</a> application as a coding exercise for the candidates to <a href="http://www.codinghorror.com/blog/2007/02/why-cant-programmers-program.html">weed out the people that claimed they could program but couldn&#8217;t</a>. Of course, this lead to a throw-down amongst the current crew as to how each of us would write it if we had too.</p>
+
+<p>I eventually came up with my minimalist version, then realized that with just a few tweaks, I could make the code run under either Perl of PHP. Seeing is that FizzBuzz is a very simple program, and not a memory resource hog like the original benchmark shootout was, I was curious to see how something that simple would perform in a shootout.</p>
+
+<p>I quickly modified the program and made it identical for Perl and PHP (other than the <code>&lt;php</code> tag at the top of the PHP version and the shebang line at the top of the Perl version). The results of the benchmark were surprising! Even with this ultra-simple example of exactly identical code, Perl was significantly (5.5x) faster.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[bado.local mbadolato ~]$ perl -v
+</span><span class='line'>
+</span><span class='line'>This is perl 5, version 12, subversion 4 (v5.12.4) built for darwin-thread-multi-2level
+</span><span class='line'>(with 2 registered patches, see perl -V for more detail)</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[bado.local mbadolato ~]$ php -v
+</span><span class='line'>PHP 5.5.0 (cli) (built: Jun 21 2013 12:09:38)
+</span><span class='line'>Copyright (c) 1997-2013 The PHP Group
+</span><span class='line'>Zend Engine v2.5.0-dev, Copyright (c) 1998-2013 Zend Technologies</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[bado.local mbadolato ~]$ time perl fizzbuzz.pl
+</span><span class='line'>
+</span><span class='line'>*snip output*
+</span><span class='line'>
+</span><span class='line'>real    0m0.006s
+</span><span class='line'>user    0m0.003s
+</span><span class='line'>sys     0m0.003s</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[bado.local mbadolato ~]$ time php fizzbuzz.php
+</span><span class='line'>
+</span><span class='line'>*snip output*
+</span><span class='line'>
+</span><span class='line'>real    0m0.034s
+</span><span class='line'>user    0m0.020s
+</span><span class='line'>sys     0m0.010s</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>fizzbuzz.pl</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="c1">#!/usr/bin/perl</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="nv">$x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$x</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">;</span> <span class="nv">$x</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nv">$fizz</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$x</span> <span class="nv">%</span> <span class="nv">3</span><span class="p">)</span> <span class="p">?</span> <span class="s">&#39;&#39;</span> <span class="p">:</span> <span class="s">&#39;Fizz&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$buzz</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$x</span> <span class="nv">%</span> <span class="nv">5</span><span class="p">)</span> <span class="p">?</span> <span class="s">&#39;&#39;</span> <span class="p">:</span> <span class="s">&#39;Buzz&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">printf</span><span class="p">(</span><span class="s">&quot;%s\n&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nv">$fizz</span> <span class="o">||</span> <span class="nv">$buzz</span><span class="p">)</span> <span class="p">?</span> <span class="s">&quot;$fizz$buzz&quot;</span> <span class="p">:</span> <span class="nv">$x</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>fizzbuzz.php</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="nv">$x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$x</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">;</span> <span class="nv">$x</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nv">$fizz</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$x</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;&#39;</span> <span class="o">:</span> <span class="s1">&#39;Fizz&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nv">$buzz</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$x</span> <span class="o">%</span> <span class="mi">5</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;&#39;</span> <span class="o">:</span> <span class="s1">&#39;Buzz&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">printf</span><span class="p">(</span><span class="s2">&quot;%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="nv">$fizz</span> <span class="o">||</span> <span class="nv">$buzz</span><span class="p">)</span> <span class="o">?</span> <span class="s2">&quot;</span><span class="si">$fizz$buzz</span><span class="s2">&quot;</span> <span class="o">:</span> <span class="nv">$x</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The output of both scripts is identical.</p>
+
+<figure class='code'><figcaption><span>fizzbuzz.php</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="mi">1</span>
+</span><span class='line'><span class="mi">2</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">4</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">7</span>
+</span><span class='line'><span class="mi">8</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="mi">11</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">13</span>
+</span><span class='line'><span class="mi">14</span>
+</span><span class='line'><span class="nx">FizzBuzz</span>
+</span><span class='line'><span class="mi">16</span>
+</span><span class='line'><span class="mi">17</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">19</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">22</span>
+</span><span class='line'><span class="mi">23</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="mi">26</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">28</span>
+</span><span class='line'><span class="mi">29</span>
+</span><span class='line'><span class="nx">FizzBuzz</span>
+</span><span class='line'><span class="mi">31</span>
+</span><span class='line'><span class="mi">32</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">34</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">37</span>
+</span><span class='line'><span class="mi">38</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="mi">41</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">43</span>
+</span><span class='line'><span class="mi">44</span>
+</span><span class='line'><span class="nx">FizzBuzz</span>
+</span><span class='line'><span class="mi">46</span>
+</span><span class='line'><span class="mi">47</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">49</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">52</span>
+</span><span class='line'><span class="mi">53</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="mi">56</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">58</span>
+</span><span class='line'><span class="mi">59</span>
+</span><span class='line'><span class="nx">FizzBuzz</span>
+</span><span class='line'><span class="mi">61</span>
+</span><span class='line'><span class="mi">62</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">64</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">67</span>
+</span><span class='line'><span class="mi">68</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="mi">71</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">73</span>
+</span><span class='line'><span class="mi">74</span>
+</span><span class='line'><span class="nx">FizzBuzz</span>
+</span><span class='line'><span class="mi">76</span>
+</span><span class='line'><span class="mi">77</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">79</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">82</span>
+</span><span class='line'><span class="mi">83</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="mi">86</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">88</span>
+</span><span class='line'><span class="mi">89</span>
+</span><span class='line'><span class="nx">FizzBuzz</span>
+</span><span class='line'><span class="mi">91</span>
+</span><span class='line'><span class="mi">92</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">94</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="mi">97</span>
+</span><span class='line'><span class="mi">98</span>
+</span><span class='line'><span class="nx">Fizz</span>
+</span><span class='line'><span class="nx">Buzz</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Notification When Switching to Git Branches With Different composer.lock Files]]></title>
+    <link href="http://www.markbadolato.com/blog/2013/08/23/notification-when-switchin-git-branches/"/>
+    <updated>2013-08-23T23:24:00-07:00</updated>
+    <id>http://www.markbadolato.com/blog/2013/08/23/notification-when-switchin-git-branches</id>
+    <content type="html"><![CDATA[<p>At my office, we frequently find ourselves switching between Git branches and often we forget to run <code>composer install</code> on the new branch to make sure our vender dependencies are at the proper versions for the branch we changed to.</p>
+
+<p>For example, <code>master</code> is stable and has an older version of a dependency, but a feature branch I&#8217;m working on uses an updated version of that dependency.</p>
+
+<p>Let&#8217;s say I&#8217;m currently working on a feature branch when a bug report comes in and I need to fix the problem ASAP. If I stash my current feature branch&#8217;s files, then create a new bug-fix branch off of master, my <code>composer.lock</code> file is different and my <code>vendor/</code> directory still contains the newer version of the dependency. This occasionally causes problems.</p>
+
+<p>A while back I found a helpful script to use as a post-checkout Git hook. Now whenever I switch branches, I get a notification telling me my dependencies are different than the branch I just switched from.</p>
+
+<p><img src="http://www.markbadolato.com/images/misc/branch_switch.png" /></p>
+
+<p>To use this script on a single project, put the following in your project&#8217;s <code>.git/hooks/post-checkout</code> file (create it if it does not already exist). Make sure to set the file permissions to executable.</p>
+
+<p>I prefer to keep the script in my global <code>git-core/templates/hooks/post-checkout</code> file so it&#8217;s accessible for all of my projects. <strong>Tip:</strong> After installing the file, run <code>git init</code> in an existing project to update the hooks and bring the global file down locally to your project.</p>
+
+<figure class='code'><figcaption><span>/usr/local/share/git-core/templates/hooks/post-checkout</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">PREV_COMMIT</span><span class="o">=</span><span class="nv">$1</span>
+</span><span class='line'><span class="nv">POST_COMMIT</span><span class="o">=</span><span class="nv">$2</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">NOCOLOR</span><span class="o">=</span><span class="s1">&#39;\x1B[0m&#39;</span>
+</span><span class='line'><span class="nv">REDCOLOR</span><span class="o">=</span><span class="s1">&#39;\x1B[37;41m&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[[</span> -f composer.lock <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>    <span class="nv">DIFF</span><span class="o">=</span><span class="sb">`</span>git diff --shortstat <span class="nv">$PREV_COMMIT</span>..<span class="nv">$POST_COMMIT</span> composer.lock<span class="sb">`</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$DIFF</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>        <span class="nb">echo</span> -e <span class="s2">&quot;$REDCOLOR composer.lock has changed. You must run composer install$NOCOLOR&quot;</span>
+</span><span class='line'>    <span class="k">fi</span>
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Please note: This script is modified to properly display color codes on a Mac/BSD system. If you&#8217;re on Linux and having display issues, change the instances of <code>\x1B</code> to <code>\e</code> and it will work for you.</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Arcade]]></title>
+    <link href="http://www.markbadolato.com/blog/2013/06/10/the-arcade/"/>
+    <updated>2013-06-10T00:09:00-07:00</updated>
+    <id>http://www.markbadolato.com/blog/2013/06/10/the-arcade</id>
+    <content type="html"><![CDATA[<p>From 1996 to mid 2004, I had my very own classic 80&#8217;s arcade in our house. The house had an enclosed screen room that was large enough to house 13 full-sized stand-up arcade machines. We also had two pinball machines, but those were in the kitchen (that&#8217;s a story for a different time).</p>
+
+<p>They were fun to play, and provided endless entertainment when we had a party, or when the gang from work came by, or friends came by with their kids. With the lights out and all the machines being played, it truly felt like stepping back in time.</p>
+
+<p>When it came time to sell the house, I had to get the machines out of there so that the house would show better. Granted, a home arcade would seduce lots of people, but it was in our best interest not to keep them there. Since 5 of them were in need of repair, and I really didn&#8217;t feel like moving them into a storage unit anyway, I decided to put them up for sale.</p>
+
+<p>Fortunately there&#8217;s a market for those things, especially considering that mine were all in phenomenal shape. Even though some needed repairs, cosmetically they were mostly great. Needless to say, they were snatched up quickly. One local person bought 3 or 4 of them; someone drove down from Vegas for one, the rest sold to other collectors locally.</p>
+
+<p>I miss having all of those machines, but I really miss those two pinball machines. Hindsight being what it is, I should have held on to those. There&#8217;s nothing like the feel of a good mid-80&#8217;s Bally/Williams pinball machine, and my two, High Speed and Pin*Bot, were my two favorites of the era. Maybe someday I&#8217;ll pick them up again.</p>
+
+<p><a href="http://www.markbadolato.com/images/arcade/arcade1.jpg" class='gallery'><img src="http://www.markbadolato.com/images/arcade/thumbnails/arcade1.jpg" /></a>
+<a href="http://www.markbadolato.com/images/arcade/arcade2.jpg" class='gallery'><img src="http://www.markbadolato.com/images/arcade/thumbnails/arcade2.jpg" /></a>
+<a href="http://www.markbadolato.com/images/arcade/arcade3.jpg" class='gallery'><img src="http://www.markbadolato.com/images/arcade/thumbnails/arcade3.jpg" /></a>
+<a href="http://www.markbadolato.com/images/arcade/arcade4.jpg" class='gallery'><img src="http://www.markbadolato.com/images/arcade/thumbnails/arcade4.jpg" /></a>
+<a href="http://www.markbadolato.com/images/arcade/arcade5.jpg" class='gallery'><img src="http://www.markbadolato.com/images/arcade/thumbnails/arcade5.jpg" /></a>
+<a href="http://www.markbadolato.com/images/arcade/arcade6.jpg" class='gallery'><img src="http://www.markbadolato.com/images/arcade/thumbnails/arcade6.jpg" /></a>
+<a href="http://www.markbadolato.com/images/arcade/arcade7.jpg" class='gallery'><img src="http://www.markbadolato.com/images/arcade/thumbnails/arcade7.jpg" /></a>
+<a href="http://www.markbadolato.com/images/arcade/arcade8.jpg" class='gallery'><img src="http://www.markbadolato.com/images/arcade/thumbnails/arcade8.jpg" /></a>
+<a href="http://www.markbadolato.com/images/arcade/arcade9.jpg" class='gallery'><img src="http://www.markbadolato.com/images/arcade/thumbnails/arcade9.jpg" /></a></p>
+
+<script>
+    $(document).ready(function(){
+        $(".gallery").colorbox({rel:'gallery', transition: "none"});
+    });
+</script>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | Mostly Harmless]]></title>
+  <link href="http://www.markbadolato.com/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://www.markbadolato.com/"/>
+  <updated>2016-01-03T13:47:54-07:00</updated>
+  <id>http://www.markbadolato.com/</id>
+  <author>
+    <name><![CDATA[Mark Badolato]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Notification When Switching to Git Branches With Different composer.lock Files]]></title>
+    <link href="http://www.markbadolato.com/blog/2013/08/23/notification-when-switchin-git-branches/"/>
+    <updated>2013-08-23T23:24:00-07:00</updated>
+    <id>http://www.markbadolato.com/blog/2013/08/23/notification-when-switchin-git-branches</id>
+    <content type="html"><![CDATA[<p>At my office, we frequently find ourselves switching between Git branches and often we forget to run <code>composer install</code> on the new branch to make sure our vender dependencies are at the proper versions for the branch we changed to.</p>
+
+<p>For example, <code>master</code> is stable and has an older version of a dependency, but a feature branch I&#8217;m working on uses an updated version of that dependency.</p>
+
+<p>Let&#8217;s say I&#8217;m currently working on a feature branch when a bug report comes in and I need to fix the problem ASAP. If I stash my current feature branch&#8217;s files, then create a new bug-fix branch off of master, my <code>composer.lock</code> file is different and my <code>vendor/</code> directory still contains the newer version of the dependency. This occasionally causes problems.</p>
+
+<p>A while back I found a helpful script to use as a post-checkout Git hook. Now whenever I switch branches, I get a notification telling me my dependencies are different than the branch I just switched from.</p>
+
+<p><img src="http://www.markbadolato.com/images/misc/branch_switch.png" /></p>
+
+<p>To use this script on a single project, put the following in your project&#8217;s <code>.git/hooks/post-checkout</code> file (create it if it does not already exist). Make sure to set the file permissions to executable.</p>
+
+<p>I prefer to keep the script in my global <code>git-core/templates/hooks/post-checkout</code> file so it&#8217;s accessible for all of my projects. <strong>Tip:</strong> After installing the file, run <code>git init</code> in an existing project to update the hooks and bring the global file down locally to your project.</p>
+
+<pre><code class="bash /usr/local/share/git-core/templates/hooks/post-checkout">#!/bin/bash
+
+PREV_COMMIT=$1
+POST_COMMIT=$2
+
+NOCOLOR='\x1B[0m'
+REDCOLOR='\x1B[37;41m'
+
+if [[ -f composer.lock ]]; then
+    DIFF=`git diff --shortstat $PREV_COMMIT..$POST_COMMIT composer.lock`
+    if [[ $DIFF != "" ]]; then
+        echo -e "$REDCOLOR composer.lock has changed. You must run composer install$NOCOLOR"
+    fi
+fi
+</code></pre>
+
+<p><em>Please note: This script is modified to properly display color codes on a Mac/BSD system. If you&#8217;re on Linux and having display issues, change the instances of <code>\x1B</code> to <code>\e</code> and it will work for you.</em></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Colorize | Mostly Harmless]]></title>
+  <link href="http://www.markbadolato.com/blog/categories/colorize/atom.xml" rel="self"/>
+  <link href="http://www.markbadolato.com/"/>
+  <updated>2016-01-03T13:47:54-07:00</updated>
+  <id>http://www.markbadolato.com/</id>
+  <author>
+    <name><![CDATA[Mark Badolato]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Colorize Your Cat Output]]></title>
+    <link href="http://www.markbadolato.com/blog/2013/12/22/colorized-cat-output/"/>
+    <updated>2013-12-22T13:37:00-07:00</updated>
+    <id>http://www.markbadolato.com/blog/2013/12/22/colorized-cat-output</id>
+    <content type="html"><![CDATA[<p>If you&#8217;re like me and constantly displaying source files via cat, here&#8217;s a tip for making that output colorized.</p>
+
+<p>First, make sure you have <code>easy_install</code> installed:</p>
+
+<pre><code class="bash">curl -O http://python-distribute.org/distribute_setup.py
+sudo python distribute_setup.py
+sudo rm distribute_setup.py
+</code></pre>
+
+<p>Next, install Pygments:</p>
+
+<pre><code class="bash">sudo easy_install Pygments
+</code></pre>
+
+<p>Finally, create an alias <code>ccat</code> (colorized cat) or something similar in your <code>.profile</code> or <code>.bash.rc</code> or <code>.bash_profile</code>:</p>
+
+<pre><code class="bash">alias ccat='pygmentize -O console256 -g'
+</code></pre>
+
+<p>Open a new terminal window or source the file containing your alias, and now you have colorized cat output!</p>
+
+<p><img src="http://www.markbadolato.com/images/misc/colorized_cat.png" /></p>
+]]></content>
+  </entry>
+  
+</feed>

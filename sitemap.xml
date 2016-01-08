@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://www.markbadolato.com/blog/2013/12/22/colorized-cat-output/</loc>
+    <lastmod>2013-12-22T13:37:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://www.markbadolato.com/blog/2013/08/24/using-fizzbuzz-to-compare-speed-in-perl-vs-php/</loc>
+    <lastmod>2013-08-24T01:03:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://www.markbadolato.com/blog/2013/08/23/notification-when-switchin-git-branches/</loc>
+    <lastmod>2013-08-23T23:24:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://www.markbadolato.com/blog/2013/06/10/the-arcade/</loc>
+    <lastmod>2013-06-10T00:09:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>http://www.markbadolato.com/blog/archives/</loc>
+    <lastmod>2016-01-03T13:47:54-07:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://www.markbadolato.com/</loc>
+    <lastmod>2016-01-03T13:47:54-07:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
